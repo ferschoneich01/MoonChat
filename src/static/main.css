@@ -1,0 +1,155 @@
+body {
+    background: #F0F2F0;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #000C40, #F0F2F0);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #000C40, #F0F2F0);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.title {
+    color: cornsilk;
+}
+
+.UserIcon {
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.Scroll::-webkit-scrollbar {
+    width: 7px;
+    color: midnightblue;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+a:focus {
+    border-bottom: 1px solid;
+    background: black;
+}
+
+a:hover {
+    border-bottom: 1px solid;
+    background: black;
+}
+
+a:active {
+    background: black;
+    color: black;
+}
+
+.chat-hover :hover {
+    background-color: rgb(212, 209, 209);
+}
+
+#Messager .row{
+    margin-right:0;
+    margin-left:0;
+}
+
+
+.container-main{
+    width: 100%;
+    height: 90%;
+}
+
+#Messager{
+    height:100%;
+}
+
+#Messager .row{
+    position:relative;
+}
+.mobile-barcontrol{
+    padding-left:2px !important;
+}
+
+.content-msg{
+    height: 82%;
+}
+.inputchat{
+    position:relative;
+    width: 100%;
+    margin:0px;
+}
+
+.texto-msj{
+    background:rgb(211, 210, 209);
+    height:100%;
+    width:100%;
+    overflow:auto;
+    border: 1px solid black;
+    margin-top: 8px;
+}
+
+.contentchats{
+    height:80%;
+    width:100%;
+    border:1px solid #ccc;
+    font:16px/26px Georgia, Garamond, Serif;
+    overflow:auto;
+    overflow-x: hidden;
+}
+/*RESPONSIVE DESDING*/
+
+.content-mobilechat{
+    height: 95%;
+}
+
+@media (max-width: 600px) {
+    #card-friends{
+        position:relative;
+        width: 100%;
+        margin-left: 10px;
+    }
+
+    .title {
+        color: black;
+    }
+}
+
+@media only screen and (max-width : 900px) {
+
+
+    .texto-msj2{
+        background:rgb(211, 210, 209);
+        height:95%;
+        width:100%;
+        overflow:auto;
+        border: 1px solid black;
+        margin-top: 8px;
+    }
+
+    .modal-dialog{
+        padding-left:2px;
+        padding-right:2px;
+    }
+    .content-msg{
+        padding-left:5px;
+        padding-right:5px;
+        height: 84%;
+        margin-bottom: 2%;
+    }
+
+    .content-msg .row{
+        padding-left:0;
+    }
+
+    .content-msg li{
+        padding-left:2px;
+    }
+}
