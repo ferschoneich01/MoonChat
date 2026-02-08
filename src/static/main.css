@@ -1,155 +1,298 @@
-body {
-    background: #F0F2F0;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #000C40, #F0F2F0);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #000C40, #F0F2F0);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+/* =========================
+   BASE
+========================= */
+
+* {
+    box-sizing: border-box;
 }
 
-.title {
-    color: cornsilk;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Fondo */
+body {
+    background: radial-gradient(circle at top, #000c40, #1e2a47);
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,.18);
 }
 
 .UserIcon {
-    margin: 5px;
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
+/* Scroll */
 .Scroll::-webkit-scrollbar {
-    width: 7px;
-    color: midnightblue;
+    width: 6px;
 }
 
-a {
-    outline: none;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
+.Scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.25);
+    border-radius: 10px;
 }
 
-a:link {
-    color: black;
+/* =========================
+   LAYOUT PRINCIPAL
+========================= */
+
+.container-main {
+    display: flex;
+    height: calc(100vh - 16px);
+    gap: 8px;
 }
 
-a:visited {
-    color: black;
+/* =========================
+   SIDEBAR / FRIENDS
+========================= */
+
+#card-friends {
+    width: 320px;
+    min-width: 280px;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
 }
 
-a:focus {
-    border-bottom: 1px solid;
-    background: black;
+/* Header usuario */
+#card-friends .border-bottom {
+    background: #111827;
+    color: #fff;
 }
 
-a:hover {
-    border-bottom: 1px solid;
-    background: black;
+/* Botones */
+#card-friends .btn {
+    border-radius: 10px;
 }
 
-a:active {
-    background: black;
-    color: black;
+/* Lista de chats */
+.contentchats {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px;
 }
 
-.chat-hover :hover {
-    background-color: rgb(212, 209, 209);
+/* Chat item */
+.chat-hover {
+    border-radius: 10px;
+    transition: background .2s;
 }
 
-#Messager .row{
-    margin-right:0;
-    margin-left:0;
+.chat-hover:hover {
+    background: rgba(108,124,255,.15);
+}
+
+/* =========================
+   CHAT PRINCIPAL
+========================= */
+
+#message {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #0f172a;
 }
 
 
-.container-main{
-    width: 100%;
-    height: 90%;
+
+/* Contenedor interno */
+#Messager {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
 }
 
-#Messager{
-    height:100%;
+/* Header chat */
+#Messager > .border-bottom {
+    background: #111827;
+    color: #fff;
 }
 
-#Messager .row{
-    position:relative;
-}
-.mobile-barcontrol{
-    padding-left:2px !important;
-}
-
-.content-msg{
-    height: 82%;
-}
-.inputchat{
-    position:relative;
-    width: 100%;
-    margin:0px;
+#Messager input[readonly] {
+    background: transparent;
+    color: #fff;
+    border: none;
 }
 
-.texto-msj{
-    background:rgb(211, 210, 209);
-    height:100%;
-    width:100%;
-    overflow:auto;
-    border: 1px solid black;
-    margin-top: 8px;
+/* =========================
+   MENSAJES
+========================= */
+
+.content-msg {
+    flex: 1;
+    min-height: 0;        
+    overflow: hidden;      
+    padding: 8px;
 }
 
-.contentchats{
-    height:80%;
-    width:100%;
-    border:1px solid #ccc;
-    font:16px/26px Georgia, Garamond, Serif;
-    overflow:auto;
+.texto-msj {
+    height: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
-}
-/*RESPONSIVE DESDING*/
-
-.content-mobilechat{
-    height: 95%;
+    background: #1f2937;
+    border-radius: 12px;
+    padding: 12px;
 }
 
-@media (max-width: 600px) {
-    #card-friends{
-        position:relative;
+
+
+.chat-hidden {
+    display: none !important;
+}
+
+/* =========================
+   INPUT CHAT
+========================= */
+
+.inputchat {
+    flex-shrink: 0;
+    padding: 8px;
+    background: #111827;
+    border-top: 1px solid rgba(255,255,255,.15);
+}
+
+
+.inputchat input {
+    border-radius: 20px;
+}
+
+.inputchat button {
+    border-radius: 20px;
+}
+
+/* =========================
+   MODAL CHAT (MOBILE)
+========================= */
+
+.content-mobilechat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-fullscreen .modal-content {
+    border-radius: 0;
+}
+
+/* =========================
+   MODALS
+========================= */
+
+.modal-content {
+    border-radius: 16px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* Tablets */
+@media (max-width: 992px) {
+
+    #card-friends {
+        width: 280px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .container-main {
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    #card-friends {
         width: 100%;
-        margin-left: 10px;
+        max-width: 100%;
     }
 
-    .title {
-        color: black;
+    #message {
+        display: none; /* Chat se abre en modal */
+    }
+
+    .UserIcon {
+        width: 40px;
+        height: 40px;
     }
 }
 
-@media only screen and (max-width : 900px) {
+/* Mobile pequeño */
+@media (max-width: 480px) {
 
-
-    .texto-msj2{
-        background:rgb(211, 210, 209);
-        height:95%;
-        width:100%;
-        overflow:auto;
-        border: 1px solid black;
-        margin-top: 8px;
+    .container-main {
+        gap: 4px;
     }
 
-    .modal-dialog{
-        padding-left:2px;
-        padding-right:2px;
-    }
-    .content-msg{
-        padding-left:5px;
-        padding-right:5px;
-        height: 84%;
-        margin-bottom: 2%;
+    .contentchats {
+        padding: 2px;
     }
 
-    .content-msg .row{
-        padding-left:0;
+    .texto-msj {
+        padding: 8px;
     }
+}
 
-    .content-msg li{
-        padding-left:2px;
-    }
+
+.message {
+    max-width: 75%;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.message.me {
+    background: #6c7cff;
+    color: #fff;
+    margin-left: auto;
+}
+
+.message.other {
+    background: #374151;
+    color: #fff;
+}
+
+.author {
+    font-size: 12px;
+    opacity: .8;
+}
+
+.time {
+    font-size: 10px;
+    text-align: right;
+    opacity: .6;
+}
+
+.system-msg {
+    text-align: center;
+    font-size: 12px;
+    opacity: .6;
+    margin: 8px 0;
+}
+
+
+#Salir {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
 }

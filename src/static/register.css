@@ -1,90 +1,190 @@
-/* Made with love by Mutiullah Samim*/
-
-@import url('https://fonts.googleapis.com/css?family=Numans');
-
-html,body{
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-background-size: cover;
-background-repeat: no-repeat;
-height: 100%;
-font-family: 'Numans', sans-serif;
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-.container{
-height: 100%;
-align-content: center;
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
-.card{
-height: 650px;
-margin-top: auto;
-margin-bottom: auto;
-padding-bottom: 5px;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+body.moon-bg {
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-.social_icon span{
-font-size: 60px;
-margin-left: 10px;
-color: #FFC312;
+body.moon-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at top, #1e2a47, #0b0f1a);
 }
 
-.social_icon span:hover{
-color: white;
-cursor: pointer;
+
+/*.moon-bg {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 0;
+    background: radial-gradient(circle at top, #1e2a47, #0b0f1a);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}*/
+
+.moon-card {
+    background: #121826;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.6);
+    color: #fff;
 }
 
-.card-header h3{
-color: white;
+.moon-icon {
+    font-size: 38px;
+    color: #6c7cff;
 }
 
-.social_icon{
-position: absolute;
-right: 20px;
-top: -45px;
+.moon-input {
+    background: #1b2233;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
 }
 
-.input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
+.moon-input::placeholder {
+    color: #9aa4bf;
 }
 
-input:focus{
-outline: 0 0 0 0  !important;
-box-shadow: 0 0 0 0 !important;
-
+.moon-input:focus {
+    box-shadow: none;
+    background: #1b2233;
+    color: #fff;
 }
 
-.remember{
-color: white;
+.btn-moon {
+    background: linear-gradient(135deg, #6c7cff, #8a5cff);
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 600;
 }
 
-.remember input
-{
-width: 20px;
-height: 20px;
-margin-left: 15px;
-margin-right: 5px;
+.moon-link {
+    color: #6c7cff;
+    text-decoration: none;
 }
 
-.login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
+.moon-link:hover {
+    text-decoration: underline;
 }
 
-.login_btn:hover{
-color: black;
-background-color: white;
+@media (max-width: 576px) {
+
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .moon-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+
+    .moon-input {
+        padding: 14px 16px;
+        font-size: 15px;
+    }
+
+    .btn-moon {
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 14px;
+    }
+
+    /* Avatar más proporcionado en móvil */
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .avatar-overlay i {
+        font-size: 22px;
+    }
+
+    h3 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 13px;
+    }
 }
 
-.links{
-color: white;
+
+
+/* Avatar uploader */
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
-.links a{
-margin-left: 4px;
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: #1b2233;
+    border: 3px solid #6c7cff;
+    transition: transform .3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* 🔥 CLAVE */
+    object-position: center;
+}
+
+.avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.avatar-overlay i {
+    font-size: 30px;
+    color: #fff;
+}
+
+.avatar:hover .avatar-overlay {
+    opacity: 1;
+}
+
+#password-msg {
+    margin-left: 4px;
+}
+
+#img-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 50%;
+    background: #1b2233;
 }

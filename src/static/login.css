@@ -1,90 +1,83 @@
-/* Made with love by Mutiullah Samim*/
-
-@import url('https://fonts.googleapis.com/css?family=Numans');
-
-html,body{
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-background-size: cover;
-background-repeat: no-repeat;
-height: 100%;
-font-family: 'Numans', sans-serif;
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-.container{
-height: 100%;
-align-content: center;
+/* Background */
+.moon-bg {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top, #1e2a47, #0b0f1a);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-.card{
-height: 370px;
-margin-top: auto;
-margin-bottom: auto;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+/* Card */
+.moon-card {
+    background: #121826;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    color: #fff;
 }
 
-.social_icon span{
-font-size: 60px;
-margin-left: 10px;
-color: #FFC312;
+/* Moon icon */
+.moon-icon {
+    font-size: 40px;
+    color: #6c7cff;
 }
 
-.social_icon span:hover{
-color: white;
-cursor: pointer;
+/* Inputs */
+.moon-input {
+    background: #1b2233;
+    border: none;
+    color: #fff;
 }
 
-.card-header h3{
-color: white;
+.moon-input::placeholder {
+    color: #9aa4bf;
 }
 
-.social_icon{
-position: absolute;
-right: 20px;
-top: -45px;
+.moon-input:focus {
+    background: #1b2233;
+    color: #fff;
+    box-shadow: none;
 }
 
-.input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
+.moon-input-icon {
+    background: #1b2233;
+    border: none;
+    color: #6c7cff;
 }
 
-input:focus{
-outline: 0 0 0 0  !important;
-box-shadow: 0 0 0 0 !important;
-
+/* Button */
+.btn-moon {
+    background: linear-gradient(135deg, #6c7cff, #8a5cff);
+    border: none;
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
 }
 
-.remember{
-color: white;
+.btn-moon:hover {
+    opacity: 0.9;
 }
 
-.remember input
-{
-width: 20px;
-height: 20px;
-margin-left: 15px;
-margin-right: 5px;
+/* Links */
+.moon-link {
+    color: #6c7cff;
+    text-decoration: none;
 }
 
-.login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
+.moon-link:hover {
+    text-decoration: underline;
 }
 
-.login_btn:hover{
-color: black;
-background-color: white;
-}
-
-.links{
-color: white;
-}
-
-.links a{
-margin-left: 4px;
-
+/* Mobile tweaks */
+@media (max-width: 576px) {
+    .moon-card {
+        padding: 22px;
+    }
 }
