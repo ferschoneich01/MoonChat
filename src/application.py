@@ -39,8 +39,28 @@ db = scoped_session(sessionmaker(bind=engine))
 # SOCKET EVENTS
 # =========================
 @socketio.on("incoming-msg")
-def on_message(data):
+def handle_message(data):
     time_stamp = time.strftime("%b-%d %I:%M%p", time.localtime())
+
+    # Guardar en BD
+    db.execute(
+        text("""
+            INSERT INTO messages (id_group, id_user, message)
+            VALUES (
+              (SELECT id_group FROM public."group" WHERE name = :group),
+              :user,
+              :msg
+            )
+        """),
+        {
+            "group": data["room"],
+            "user": session["id_user"],
+            "msg": data["msg"]
+        }
+    )
+    db.commit()
+
+    # ✅ EMIT CORRECTO (DICT REAL)
     emit(
         "incoming-msg",
         {
@@ -51,6 +71,7 @@ def on_message(data):
         },
         room=data["room"]
     )
+
 
 
 @socketio.on("join")
@@ -101,46 +122,33 @@ def index():
 @app.route("/join-group", methods=["POST"])
 @login_required
 def joingroup():
-    group_name = request.form.get("searchgroup")
+    group_id = request.form.get("group_id")
 
-    if not group_name:
-        flash("Debe ingresar un nombre de grupo")
-        return redirect("/")
+    if not group_id:
+        return "Invalid request", 400
 
-    group = db.execute(
-        text('SELECT id_group FROM public."group" WHERE name = :name'),
-        {"name": group_name}
-    ).mappings().fetchone()
-
-    if not group:
-        flash("El grupo no existe")
-        return redirect("/")
-
-    # Evitar que se una dos veces
-    already_joined = db.execute(
+    exists = db.execute(
         text("""
-            SELECT 1
-            FROM public.user_group
+            SELECT 1 FROM public.user_group
             WHERE id_user = :user AND id_group = :group
         """),
-        {"user": session["id_user"], "group": group["id_group"]}
+        {"user": session["id_user"], "group": group_id}
     ).fetchone()
 
-    if already_joined:
-        flash("Ya perteneces a este grupo")
-        return redirect("/")
+    if exists:
+        return "Already joined", 200
 
     db.execute(
         text("""
             INSERT INTO public.user_group (id_user, id_group)
             VALUES (:user, :group)
         """),
-        {"user": session["id_user"], "group": group["id_group"]}
+        {"user": session["id_user"], "group": group_id}
     )
     db.commit()
 
-    flash("Te uniste al grupo correctamente")
-    return redirect("/")
+    return "OK", 200
+
 
 
 @app.route("/create-group", methods=["POST"])
@@ -254,6 +262,66 @@ def register():
         return redirect("/login")
 
     return render_template("register.html")
+
+@app.route("/api/groups/search")
+@login_required
+def search_groups():
+    q = request.args.get("q", "").strip()
+
+    if len(q) < 2:
+        return {"groups": []}
+
+    rows = db.execute(
+        text("""
+            SELECT id_group, name, photo
+            FROM public."group"
+            WHERE name ILIKE :q
+            ORDER BY name
+            LIMIT 10
+        """),
+        {"q": f"%{q}%"}
+    ).mappings().fetchall()
+
+    return {
+        "groups": [dict(row) for row in rows]
+    }
+
+
+@app.route("/api/messages/<group_name>")
+@login_required
+def get_messages(group_name):
+    rows = db.execute(
+        text("""
+            SELECT u.username, m.message, m.created_at
+            FROM messages m
+            JOIN users u ON u.id_user = m.id_user
+            WHERE m.id_group = (
+              SELECT id_group FROM public."group" WHERE name = :group
+            )
+            ORDER BY m.created_at
+        """),
+        {"group": group_name}
+    ).mappings().fetchall()
+
+    return {"messages": [dict(r) for r in rows]}
+
+@app.route("/api/my-groups")
+@login_required
+def my_groups():
+    rows = db.execute(
+        text("""
+            SELECT g.name
+            FROM public.user_group ug
+            JOIN public."group" g ON g.id_group = ug.id_group
+            WHERE ug.id_user = :id
+        """),
+        {"id": session["id_user"]}
+    ).mappings().fetchall()
+
+    return {
+        "groups": [r["name"] for r in rows]
+    }
+
 
 
 # =========================
