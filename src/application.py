@@ -32,45 +32,47 @@ socketio = SocketIO(app, manage_session=False)
 # =========================
 # DATABASE
 # =========================
-engine = create_engine(os.getenv("DATABASE_URL"))
+#engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine(
+    os.getenv("DATABASE_URL"),
+    pool_size=20,
+    max_overflow=30,
+    pool_timeout=60,
+    pool_recycle=1800,
+    pool_pre_ping=True
+)
+
 db = scoped_session(sessionmaker(bind=engine))
 
 # =========================
 # SOCKET EVENTS
 # =========================
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.remove()
+
+
 @socketio.on("incoming-msg")
 def handle_message(data):
-    time_stamp = time.strftime("%b-%d %I:%M%p", time.localtime())
-
-    # Guardar en BD
-    db.execute(
-        text("""
-            INSERT INTO messages (id_group, id_user, message)
-            VALUES (
-              (SELECT id_group FROM public."group" WHERE name = :group),
-              :user,
-              :msg
-            )
-        """),
-        {
-            "group": data["room"],
-            "user": session["id_user"],
-            "msg": data["msg"]
-        }
-    )
-    db.commit()
-
-    # ✅ EMIT CORRECTO (DICT REAL)
-    emit(
-        "incoming-msg",
-        {
-            "username": data["username"],
-            "msg": data["msg"],
-            "time_stamp": time_stamp,
-            "room": data["room"]
-        },
-        room=data["room"]
-    )
+    try:
+        db.execute(
+            text("""
+                INSERT INTO messages (id_group, id_user, message)
+                VALUES (
+                  (SELECT id_group FROM public."group" WHERE name = :group),
+                  :user,
+                  :msg
+                )
+            """),
+            {
+                "group": data["room"],
+                "user": session["id_user"],
+                "msg": data["msg"]
+            }
+        )
+        db.commit()
+    finally:
+        db.remove()
 
 
 
